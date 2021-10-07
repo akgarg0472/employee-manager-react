@@ -1,12 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import Loader from "./Loader";
 import {
   emailFormatCheckRegex,
   passwordFormatCheckRegex,
 } from "../values/ConstantsAndValues";
 import "./Login.css";
+import axios from "axios";
 import swal from "sweetalert";
+import useUser from "../hooks/useUser";
 
 const validateSigninForm = () => {
   const email = document.getElementById("login_username");
@@ -42,11 +44,21 @@ const validateSigninForm = () => {
 };
 
 const Login = () => {
+  const { getUser, setUser } = useUser();
+  const history = useHistory();
   const [showPasswordToggle, setShowPasswordToggle] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
-  const [signinFormData, setSigninFormData] = useState({
+  const [loginFormData, setLoginFormData] = useState({
     email: "",
     password: "",
+  });
+
+  useEffect(() => {
+    document.title = "Login";
+
+    if (getUser() !== null) {
+      history.push("/");
+    }
   });
 
   const toggleShowPassword = () => {
@@ -54,24 +66,67 @@ const Login = () => {
   };
 
   const updateSigninFormData = (e) => {
-    setSigninFormData((oldData) => {
+    setLoginFormData((oldData) => {
       const field = e.target.name;
       const value = e.target.value;
       return { ...oldData, [field]: value };
     });
   };
 
-  const performLogin = (e) => {
+  const updateLoginError = (msg, status) => {
+    const email = document.getElementById("login_username");
+    const password = document.getElementById("login__password");
+    const errorField = document.getElementById("signin__error");
+
+    email.classList.remove("signin__input__error");
+    password.classList.remove("signin__input__error");
+    errorField.style.display = "block";
+    errorField.innerHTML = msg;
+
+    switch (status) {
+      case 404:
+        email.classList.add("signin__input__error");
+        break;
+
+      case 401:
+        password.classList.add("signin__input__error");
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  const performLogin = async (e) => {
     e.preventDefault();
 
     if (validateSigninForm()) {
-      swal(
-        "Congrats",
-        "Sign in form is validated successfully",
-        "success"
-      ).then(() => {
-        setShowLoader(true);
-      });
+      setShowLoader(true);
+
+      const response = await axios
+        .post("http://localhost:8080/api/v1/login", loginFormData)
+        .then((res) => {
+          setShowLoader(false);
+          return res.data;
+        })
+        .catch(() => {
+          setShowLoader(false);
+          swal(
+            "Server error",
+            "Unexpected server error occured. Please try again later",
+            "error"
+          );
+        });
+
+      if (response.status === 200) {
+        setUser({
+          auth__user: response.auth_user,
+          auth__token: response.auth_token,
+        });
+        history.push("/");
+      } else {
+        updateLoginError(response.message, response.status);
+      }
     }
   };
 
@@ -94,7 +149,7 @@ const Login = () => {
                 type="email"
                 id="login_username"
                 name="email"
-                value={signinFormData.email}
+                value={loginFormData.email}
                 onChange={updateSigninFormData}
                 autoComplete="off"
                 required
@@ -110,7 +165,7 @@ const Login = () => {
                 type={showPasswordToggle ? "text" : "password"}
                 id="login__password"
                 name="password"
-                value={signinFormData.password}
+                value={loginFormData.password}
                 onChange={updateSigninFormData}
                 required
               />

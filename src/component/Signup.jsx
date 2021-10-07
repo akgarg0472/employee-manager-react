@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import swal from "sweetalert";
 import {
   emailFormatCheckRegex,
@@ -104,6 +104,11 @@ const Signup = () => {
   });
 
   const [showLoader, setShowLoader] = useState(false);
+  const history = useHistory();
+
+  useEffect(() => {
+    document.title = "Signup";
+  }, []);
 
   const updateSignupFormInput = (e) => {
     const field = e.target.name;
@@ -115,6 +120,9 @@ const Signup = () => {
   };
 
   const submitSignupForm = async () => {
+    const email = document.getElementById("user__email");
+    const errorTag = document.getElementById("signup__error");
+
     if (validateForm()) {
       setShowLoader(true);
 
@@ -133,8 +141,26 @@ const Signup = () => {
           );
         });
 
-      console.log(response.message);
-      console.log(response.status);
+      if (response.status === 409) {
+        email.classList.add("signup__form__error__input");
+        errorTag.style.display = "block";
+        errorTag.innerHTML = response.message;
+      } else {
+        email.classList.remove("signup__form__error__input");
+        errorTag.style.display = "none";
+        errorTag.innerHTML = "";
+        swal("Congratulations", response.message, "success").then(() => {
+          setSignupFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            password: "",
+            confirmPassword: "",
+            phone: "",
+          });
+          history.push("/login");
+        });
+      }
     }
   };
 

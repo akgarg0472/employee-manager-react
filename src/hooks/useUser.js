@@ -25,7 +25,12 @@ const useUser = () => {
     return authenticatedUser;
   };
 
-  return { setUser, getUser };
+  const removeUser = () => {
+    localStorage.setItem("auth__user", null);
+    setauthenticatedUser(null);
+  };
+
+  return { setUser, getUser, removeUser };
 };
 
 export default useUser;

@@ -3,13 +3,13 @@ import useWindowDimensions from "../hooks/useWindowDimensions";
 import { Link } from "react-router-dom";
 import "./NavigationBar.css";
 
-const NavigationBar = () => {
+const NavigationBar = (props) => {
   const [showNavigationLinks, setShowNavigationLinks] = useState(true);
   const { width } = useWindowDimensions();
 
   useEffect(() => {
     setShowNavigationLinks(width <= 768 ? false : true);
-  }, [width]);
+  }, [width, props.user]);
 
   const hideNavigation = () => {
     const element = document.getElementById("toggle__pass__icon");
@@ -52,7 +52,13 @@ const NavigationBar = () => {
                 Home
               </Link>
             </li>
-            <li className="nav__link">
+
+            <li
+              className="nav__link"
+              style={{
+                display: props.user !== false ? "none" : "inherit",
+              }}
+            >
               <Link
                 className="navbar__nav__url"
                 to="/login"
@@ -61,7 +67,13 @@ const NavigationBar = () => {
                 Login
               </Link>
             </li>
-            <li className="nav__link">
+
+            <li
+              className="nav__link"
+              style={{
+                display: props.user !== false ? "none" : "inherit",
+              }}
+            >
               <Link
                 className="navbar__nav__url"
                 to="/signup"
