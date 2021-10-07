@@ -1,0 +1,45 @@
+.loader__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader__container .loader {
+  width: 8rem;
+  height: 8rem;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: loader__spin__animation 1s linear infinite;
+}
+
+@keyframes loader__spin__animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* responsive design media query */
+@media screen and (max-width: 768px) {
+  .loader__container .loader {
+    width: 7rem;
+    height: 7rem;
+    border-width: 8px;
+  }
+}
+
+@media only screen and (max-height: 550px) {
+  .loader__container .loader {
+    width: 6rem;
+    height: 6rem;
+    border-width: 7px;
+  }
+}

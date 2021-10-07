@@ -1,0 +1,177 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+.my__navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: rgb(19, 47, 76);
+  height: 10vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.my__navbar .nav__container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.my__navbar .nav__container .img__container {
+  margin-left: 8rem;
+  cursor: pointer;
+}
+
+.my__navbar .nav__container .img__container .nav__logo {
+  width: 7vh;
+  height: 7vh;
+  color: #fff;
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.my__navbar .nav__container .navbar__hamburger,
+.my__navbar .nav__container .navbar__close__btn {
+  display: none;
+}
+
+.my__navbar .nav__container .nav__links__container {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-right: 8rem;
+}
+
+.my__navbar .nav__container .nav__links__container .nav__links {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+}
+
+.my__navbar .nav__container .nav__links__container .nav__links .nav__link {
+  margin-left: 3rem;
+  margin-right: 3rem;
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.my__navbar
+  .nav__container
+  .nav__links__container
+  .nav__links
+  .nav__link
+  .navbar__nav__url {
+  text-decoration: none;
+  color: #fff;
+}
+
+.my__navbar
+  .nav__container
+  .nav__links__container
+  .nav__links
+  .nav__link:hover {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media screen and (min-width: 769px) {
+  .my__navbar
+    .nav__container
+    .nav__links__container
+    .nav__links
+    .nav__link:after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    transform-origin: left;
+    transition: transform 0.25s ease-in-out;
+  }
+
+  .my__navbar
+    .nav__container
+    .nav__links__container
+    .nav__links
+    .nav__link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .my__navbar {
+    height: 8vh;
+  }
+
+  .my__navbar .nav__container .img__container {
+    margin-left: 1rem;
+  }
+
+  .my__navbar .nav__container .navbar__hamburger {
+    display: block;
+    position: relative;
+    right: 4%;
+    font-size: 2.4rem;
+    color: #fff;
+  }
+
+  .my__navbar .nav__container .navbar__close__btn {
+    position: absolute;
+    display: block;
+    right: 4%;
+    color: #fff;
+    font-size: 2.4rem;
+    z-index: 999999;
+  }
+
+  .my__navbar .nav__container .nav__links__container {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(19, 47, 76);
+  }
+
+  .my__navbar .nav__container .nav__links__container .nav__links {
+    flex-direction: column;
+    z-index: 999;
+    width: 100%;
+  }
+
+  .my__navbar .nav__container .nav__links__container .nav__links .nav__link {
+    padding: 2.5rem 0 2.5rem 0;
+    width: 100%;
+    text-align: center;
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+    z-index: 99;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  .my__navbar {
+    height: 14vh;
+  }
+
+  .my__navbar .nav__container .img__container .nav__logo {
+    width: 12vh;
+    height: 12vh;
+  }
+}
