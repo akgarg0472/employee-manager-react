@@ -14,10 +14,9 @@ const Error404 = () => {
           OR IT IS TEMPORARY UNAVAILABLE
         </p>
 
-        {/* change to Link */}
-        <a to="/" className="back-home-btn">
+        <Link to="/" className="back-home-btn">
           Back to Home
-        </a>
+        </Link>
       </div>
     </>
   );

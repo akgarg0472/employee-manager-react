@@ -2,14 +2,8 @@ import { useEffect, useState } from "react";
 
 const useUser = () => {
   useEffect(() => {
-    console.log("useEffect of useUser called");
     if (localStorage.getItem("auth__user") === null) {
-      const user = {
-        auth__userid: "",
-        auth__token: "",
-        auth__id: "",
-      };
-      localStorage.setItem("auth__user", JSON.stringify(user));
+      localStorage.setItem("auth__user", null);
     }
   }, []);
 
@@ -18,11 +12,17 @@ const useUser = () => {
   );
 
   const setUser = (props) => {
+    if (authenticatedUser === null) {
+      const user = JSON.stringify(props);
+      localStorage.setItem("auth__user", user);
+      setauthenticatedUser(JSON.parse(localStorage.getItem("auth__user")));
+    }
+
     return authenticatedUser;
   };
 
   const getUser = () => {
-    return JSON.parse(authenticatedUser);
+    return authenticatedUser;
   };
 
   return { setUser, getUser };

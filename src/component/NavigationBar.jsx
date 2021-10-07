@@ -11,14 +11,6 @@ const NavigationBar = () => {
     setShowNavigationLinks(width <= 768 ? false : true);
   }, [width]);
 
-  const showNavigation = () => {
-    const element = document.getElementById("toggle__pass__icon");
-    if (element) {
-      element.style.display = "none";
-    }
-    setShowNavigationLinks(true);
-  };
-
   const hideNavigation = () => {
     const element = document.getElementById("toggle__pass__icon");
 
@@ -39,20 +31,9 @@ const NavigationBar = () => {
   return (
     <nav className="my__navbar">
       <div className="nav__container">
-        <div className="img__container">
-          <Link to="/">
-            <img
-              className="nav__logo"
-              src="./static/images/nav-logo.png"
-              alt="Navigation logo"
-            />
-          </Link>
+        <div className="home__url">
+          <Link to="/">EmpMgr</Link>
         </div>
-
-        <i
-          className="fas fa-bars navbar__hamburger"
-          onClick={showNavigation}
-        ></i>
 
         <i
           className="fas fa-times navbar__close__btn"

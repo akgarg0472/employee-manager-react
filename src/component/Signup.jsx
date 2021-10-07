@@ -7,6 +7,7 @@ import {
   phoneFormatCheckRegex,
 } from "../values/ConstantsAndValues";
 import Loader from "./Loader";
+import axios from "axios";
 import "./Signup.css";
 
 const validateForm = () => {
@@ -113,11 +114,27 @@ const Signup = () => {
     });
   };
 
-  const submitSignupForm = () => {
+  const submitSignupForm = async () => {
     if (validateForm()) {
-      const data = JSON.stringify(signupFormData);
       setShowLoader(true);
-      swal("Congratulations", data, "success");
+
+      const response = await axios
+        .post("http://localhost:8080/api/v1/signup", signupFormData)
+        .then((res) => {
+          setShowLoader(false);
+          return res.data;
+        })
+        .catch(() => {
+          setShowLoader(false);
+          swal(
+            "Server error",
+            "Unexpected server error occured. Please try again later",
+            "error"
+          );
+        });
+
+      console.log(response.message);
+      console.log(response.status);
     }
   };
 

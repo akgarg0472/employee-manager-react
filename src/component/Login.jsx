@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
 import {
@@ -48,18 +48,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-
-  useEffect(() => {
-    const loginToken = async () => {
-      const response = await fetch("http://localhost:8080/api/v1/login-test")
-        .then((resp) => resp)
-        .then((resp) => resp.json());
-
-      console.log(response);
-    };
-
-    loginToken();
-  }, []);
 
   const toggleShowPassword = () => {
     setShowPasswordToggle(!showPasswordToggle);

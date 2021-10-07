@@ -19,20 +19,14 @@
   justify-content: space-between;
 }
 
-.my__navbar .nav__container .img__container {
-  margin-left: 8rem;
-  cursor: pointer;
-}
-
-.my__navbar .nav__container .img__container .nav__logo {
-  width: 7vh;
-  height: 7vh;
+.my__navbar .nav__container .home__url a {
   color: #fff;
-  border-radius: 50%;
-  padding: 8px;
+  text-decoration: none;
+  font-size: 1.6rem;
+  margin-left: 4rem;
 }
 
-.my__navbar .nav__container .navbar__hamburger,
+.my__navbar .nav__container .my__navbar .nav__container .navbar__hamburger,
 .my__navbar .nav__container .navbar__close__btn {
   display: none;
 }
@@ -116,10 +110,6 @@
     height: 8vh;
   }
 
-  .my__navbar .nav__container .img__container {
-    margin-left: 1rem;
-  }
-
   .my__navbar .nav__container .navbar__hamburger {
     display: block;
     position: relative;
@@ -168,10 +158,5 @@
 @media screen and (max-height: 550px) {
   .my__navbar {
     height: 14vh;
-  }
-
-  .my__navbar .nav__container .img__container .nav__logo {
-    width: 12vh;
-    height: 12vh;
   }
 }
