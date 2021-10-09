@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import useUser from "../hooks/useUser";
+import axios from "axios";
 
 const HomePage = () => {
   const { getUser, removeUser } = useUser();
@@ -7,6 +8,23 @@ const HomePage = () => {
   useEffect(() => {
     document.title = "Home";
   }, []);
+
+  const getEmployees = async () => {
+    if (getUser() !== null) {
+      const res = await axios
+        .get("http://localhost:8080/api/v1/user/employees", {
+          headers: {
+            Authorization: `Bearer ${getUser().auth__token}`,
+          },
+        })
+        .then((res) => res)
+        .then((res) => (res !== null ? res.data.payload : null))
+        .catch((err) => console.log(err));
+      res === null ? alert("no auth") : console.log(res);
+    } else {
+      alert("pls login to continue");
+    }
+  };
 
   return (
     <>
@@ -20,6 +38,16 @@ const HomePage = () => {
         }}
       >
         Logout
+      </button>
+      <br />
+      <br />
+
+      <button
+        onClick={() => {
+          getEmployees();
+        }}
+      >
+        Show employees
       </button>
     </>
   );

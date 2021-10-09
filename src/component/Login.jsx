@@ -9,6 +9,7 @@ import "./Login.css";
 import axios from "axios";
 import swal from "sweetalert";
 import useUser from "../hooks/useUser";
+import { useCookies } from "react-cookie";
 
 const validateSigninForm = () => {
   const email = document.getElementById("login_username");
@@ -52,6 +53,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [cookies, setCookies] = useCookies();
 
   useEffect(() => {
     document.title = "Login";
@@ -104,18 +106,15 @@ const Login = () => {
       setShowLoader(true);
 
       const response = await axios
-        .post("http://localhost:8080/api/v1/login", loginFormData)
+        .post(`http://localhost:8080/api/v1/login`, loginFormData, {})
         .then((res) => {
           setShowLoader(false);
           return res.data;
         })
-        .catch(() => {
+        .catch((error) => {
           setShowLoader(false);
-          swal(
-            "Server error",
-            "Unexpected server error occured. Please try again later",
-            "error"
-          );
+          swal(error.message, "Please try again later", "error");
+          return;
         });
 
       if (response.status === 200) {
