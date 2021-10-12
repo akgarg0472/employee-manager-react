@@ -6,6 +6,7 @@ import SignupPage from "./pages/SignupPage";
 import Error404 from "./component/Error404";
 import HomePage from "./pages/HomePage";
 import useUser from "./hooks/useUser";
+import DashboardPage from "./pages/DashboardPage";
 
 const App = () => {
   const { getUser } = useUser();
@@ -14,16 +15,20 @@ const App = () => {
     <>
       <NavigationBar user={getUser() !== null} />
       <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
-
         <Route path="/login" exact>
           <LoginPage />
         </Route>
 
         <Route path="/signup" exact>
           <SignupPage />
+        </Route>
+
+        <Route path="/user/dashboard" exact>
+          <DashboardPage />
+        </Route>
+
+        <Route path="/" exact>
+          <HomePage />
         </Route>
 
         <Route>

@@ -17,8 +17,6 @@ const useUser = () => {
       localStorage.setItem("auth__user", user);
       setauthenticatedUser(JSON.parse(localStorage.getItem("auth__user")));
     }
-
-    return authenticatedUser;
   };
 
   const getUser = () => {

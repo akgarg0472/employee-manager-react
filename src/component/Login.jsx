@@ -9,7 +9,6 @@ import "./Login.css";
 import axios from "axios";
 import swal from "sweetalert";
 import useUser from "../hooks/useUser";
-import { useCookies } from "react-cookie";
 
 const validateSigninForm = () => {
   const email = document.getElementById("login_username");
@@ -53,13 +52,12 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const [cookies, setCookies] = useCookies();
 
   useEffect(() => {
     document.title = "Login";
 
     if (getUser() !== null) {
-      history.push("/");
+      history.push("/user/dashboard");
     }
   });
 
@@ -119,10 +117,10 @@ const Login = () => {
 
       if (response.status === 200) {
         setUser({
-          auth__user: response.auth_user,
           auth__token: response.auth_token,
+          auth_userId: response.auth_userId,
         });
-        history.push("/");
+        history.push("/user/dashboard");
       } else {
         updateLoginError(response.message, response.status);
       }

@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+.employee_container {
+  width: 100vw;
+  margin-top: 1.6rem;
+}
+
+.employee_container h1 {
+  text-align: center;
+}
+
+.employee__table__container {
+  width: 95vw;
+  margin: auto;
+  overflow-x: auto;
+}
+
+.employee__table__container .employee__table {
+  width: 100%;
+  margin: auto;
+  margin-top: 1.2rem;
+  font-size: 1.5rem;
+  border: 1px solid #000;
+  border-radius: 0.2rem;
+  text-transform: capitalize;
+  font-family: "Poppins", sans-serif;
+}
+
+.employee__table__container .employee__table th,
+.employee__table__container .employee__table td {
+  text-align: center;
+  border-right: 1px solid #111;
+  border-bottom: 1px solid #111;
+  padding: 0.8rem 0.4rem;
+  word-wrap: break-word;
+}
+
+.employee__table__container .employee__table th:last-child {
+  border-right: 0;
+}
+
+.employee__table__container .employee__table td:last-child {
+  border-right: 0;
+}
+
+.employee__table__container .employee__table tr:last-child td {
+  border-bottom: 0;
+}
+
+.action__btn {
+  margin-right: 1.2rem;
+}
+
+.action__btn:hover {
+  cursor: pointer;
+  color: #eb4d4b;
+}
+
+@media screen and (max-width: 1000px) {
+  .employee__table__container .employee__table {
+    font-size: 1.4rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .employee__table__container .employee__table {
+    font-size: 1.35rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .employee__table__container .employee__table {
+    font-size: 1.3rem;
+  }
+
+  .employee__table__container .employee__table th,
+  .employee__table__container .employee__table td {
+    padding: 0.5rem 0.4rem;
+  }
+
+  .employee_container h1 {
+    font-size: 1.8rem;
+  }
+}

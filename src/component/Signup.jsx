@@ -8,6 +8,7 @@ import {
 } from "../values/ConstantsAndValues";
 import Loader from "./Loader";
 import axios from "axios";
+import useUser from "../hooks/useUser";
 import "./Signup.css";
 
 const validateForm = () => {
@@ -105,8 +106,12 @@ const Signup = () => {
 
   const [showLoader, setShowLoader] = useState(false);
   const history = useHistory();
+  const { getUser } = useUser();
 
   useEffect(() => {
+    if (getUser() !== null) {
+      history.push("/user/dashboard");
+    }
     document.title = "Signup";
   }, []);
 

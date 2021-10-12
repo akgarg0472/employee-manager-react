@@ -15,6 +15,7 @@ const HomePage = () => {
         .get("http://localhost:8080/api/v1/user/employees", {
           headers: {
             Authorization: `Bearer ${getUser().auth__token}`,
+            userId: `${getUser().auth_userId}`,
           },
         })
         .then((res) => res)
@@ -29,16 +30,6 @@ const HomePage = () => {
   return (
     <>
       <h1>This is home page</h1>
-      <button
-        style={{
-          display: getUser() === null ? "none" : "inherit",
-        }}
-        onClick={() => {
-          removeUser();
-        }}
-      >
-        Logout
-      </button>
       <br />
       <br />
 

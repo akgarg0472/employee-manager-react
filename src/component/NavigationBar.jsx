@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 import { Link } from "react-router-dom";
+import useUser from "../hooks/useUser";
 import "./NavigationBar.css";
 
 const NavigationBar = (props) => {
   const [showNavigationLinks, setShowNavigationLinks] = useState(true);
   const { width } = useWindowDimensions();
+  const { removeUser } = useUser();
 
   useEffect(() => {
     setShowNavigationLinks(width <= 768 ? false : true);
@@ -80,6 +82,21 @@ const NavigationBar = (props) => {
                 onClick={hideNavigation}
               >
                 Signup
+              </Link>
+            </li>
+
+            <li
+              className="nav__link"
+              style={{
+                display: props.user === false ? "none" : "inherit",
+              }}
+            >
+              <Link
+                className="navbar__nav__url"
+                to="/"
+                onClick={() => removeUser()}
+              >
+                Logout
               </Link>
             </li>
           </ul>
