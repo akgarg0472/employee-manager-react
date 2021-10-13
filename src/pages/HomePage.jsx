@@ -3,7 +3,7 @@ import useUser from "../hooks/useUser";
 import axios from "axios";
 
 const HomePage = () => {
-  const { getUser, removeUser } = useUser();
+  const { getUser } = useUser();
 
   useEffect(() => {
     document.title = "Home";

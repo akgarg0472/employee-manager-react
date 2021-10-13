@@ -1,15 +1,14 @@
 import React from "react";
-import swal from "sweetalert";
 
 const EmployeeRecord = (props) => {
-  const { id, firstName, lastName, email, department } = props;
+  const { id, firstName, lastName, email, address, department } = props;
 
-  const editEmployee = (employeeId) => {
-    swal(`Edit employee: ${employeeId}`);
+  const editEmployee = () => {
+    console.log();
   };
 
-  const deleteEmployee = (employeeId) => {
-    swal(`Delete employee: ${employeeId}`);
+  const deleteEmployee = () => {
+    props.onDeleteEmployee();
   };
 
   return (
@@ -19,18 +18,19 @@ const EmployeeRecord = (props) => {
         {firstName} {lastName}
       </td>
       <td>{email}</td>
+      <td>{address}</td>
       <td>{department}</td>
       <td>
         <i
           className="fas fa-pencil-alt action__btn"
           title="Edit"
-          onClick={() => editEmployee(id)}
+          onClick={() => editEmployee()}
         ></i>
 
         <i
           className="fas fa-trash-alt action__btn"
           title="Delete"
-          onClick={() => deleteEmployee(id)}
+          onClick={() => deleteEmployee()}
         ></i>
       </td>
     </tr>

@@ -113,6 +113,7 @@ const Signup = () => {
       history.push("/user/dashboard");
     }
     document.title = "Signup";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateSignupFormInput = (e) => {

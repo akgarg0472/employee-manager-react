@@ -118,7 +118,7 @@ const Login = () => {
       if (response.status === 200) {
         setUser({
           auth__token: response.auth_token,
-          auth_userId: response.auth_userId,
+          auth__userId: response.auth_userId,
         });
         history.push("/user/dashboard");
       } else {
