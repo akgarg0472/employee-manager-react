@@ -1,24 +1,23 @@
 import React from "react";
 
 const EmployeeRecord = (props) => {
-  const { id, firstName, lastName, email, address, department } = props;
-
-  const editEmployee = () => {
-    console.log();
-  };
+  const { serial, firstName, lastName, email, department } = props;
 
   const deleteEmployee = () => {
     props.onDeleteEmployee();
   };
 
+  const editEmployee = () => {
+    props.onEditEmployee();
+  };
+
   return (
     <tr>
-      <td>{id}</td>
+      <td>{serial}</td>
       <td>
         {firstName} {lastName}
       </td>
       <td>{email}</td>
-      <td>{address}</td>
       <td>{department}</td>
       <td>
         <i

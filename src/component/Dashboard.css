@@ -1,16 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
 .employee_container {
-  width: 100vw;
-  margin-top: 1.6rem;
+  margin: 1.6rem;
+  position: relative;
+}
+
+.employee_container .add__employee__btn {
+  border: none;
+  width: 16rem;
+  height: 4rem;
+  margin: 1.2rem 0 2.4rem 0;
+  cursor: pointer;
+  background-color: #ee5253;
+  color: #f5f6fa;
+  border-radius: 0.4rem;
+  outline: none;
+  transition: all 0.1s ease-in-out;
+}
+
+.employee_container .add__employee__btn:hover {
+  color: #fff;
+  border: 2px solid #ee5253;
+  color: #485460;
+  background-color: #fff;
 }
 
 .employee_container h1 {
-  text-align: center;
+  text-align: left;
+  font-family: "Poppins", sans-serif;
 }
 
 .employee__table__container {
-  width: 95vw;
+  position: relative;
+  width: 100%;
   margin: auto;
   overflow-x: auto;
 }

@@ -1,0 +1,93 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+.add__employee__modal__container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  backdrop-filter: blur(3px);
+  color: #000;
+  background-color: rgba(0, 0, 0, 0.41);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease-in-out;
+}
+
+.modal {
+  position: relative;
+  width: 50%;
+  background-color: whitesmoke;
+  border-radius: 0.6rem;
+  box-shadow: 0 0 0;
+  font-family: "Poppins", sans-serif;
+  overflow-y: auto;
+  border: none;
+  box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.41);
+}
+
+.modal .modal__header {
+  font-size: 2rem;
+  border-bottom: 2px solid #e9ecef;
+  padding: 0.8rem;
+}
+
+.modal .modal__body {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.modal .modal__body .modal__input {
+  margin: 0.4rem;
+  border-radius: 0.4rem;
+  border: none;
+  height: 3.6rem;
+  padding-left: 8px;
+  font-size: 1.4rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.modal .modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.8rem;
+}
+
+.modal__btn {
+  width: 10rem;
+  height: 4rem;
+  margin-right: 1.2rem;
+  border: none;
+  outline: none;
+  border-radius: 0.4rem;
+  color: #fff;
+  transition: all 0.1s ease-in-out;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.modal__btn:first-child {
+  background-color: #ee5253;
+}
+
+.modal__btn:last-child {
+  background-color: #3498db;
+}
+
+.modal__btn:hover {
+  box-shadow: 0 1px 2px rgb(114, 112, 112);
+  cursor: pointer;
+}
+
+#error {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #ee5253;
+  margin-top: 1.2rem;
+  display: none;
+}

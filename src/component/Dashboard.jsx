@@ -6,12 +6,14 @@ import axios from "axios";
 import swal from "sweetalert";
 import Loader from "../component/Loader";
 import "./Dashboard.css";
+import AddEmployee from "./AddEmployee";
 
 const Dashboard = () => {
   const { getUser, removeUser } = useUser(); // used to manage the authenticated user
   const history = useHistory(); // used for navigation
   const [employees, setEmployees] = useState([]); // manages the employees list
   const [showLoader, setShowLoader] = useState(true); // manages the loader
+  const [showAddEmployee, setShowAddEmployee] = useState(false); // manages the loader
 
   useEffect(() => {
     if (getUser() === null) {
@@ -23,17 +25,28 @@ const Dashboard = () => {
         .get("http://localhost:8080/api/v1/user/employees", {
           headers: {
             Authorization: `Bearer ${getUser().auth__token}`,
+            userId: getUser().auth__userId,
           },
         })
-        .catch(() => {
+        .catch((err) => {
           setShowLoader(false);
-          swal("Something wrong happended, please try again");
+          swal(err.message);
           return;
         });
+
+      if (response === null || response === undefined) {
+        swal("Error", "Something wrong happended, try again", "error").then(
+          () => {
+            removeUser();
+            history.push("/login");
+          }
+        );
+      }
 
       if (response.data.status === 401) {
         swal("Alert", response.data.message, "warning").then(() => {
           removeUser();
+          setShowLoader(false);
           history.push("/login");
         });
       } else if (response.data.status === 200) {
@@ -98,21 +111,93 @@ const Dashboard = () => {
     });
   };
 
+  const editEmployee = (id) => {
+    console.log("edit employee called");
+  };
+
+  const addEmployeeModal = () => {
+    setShowAddEmployee(true);
+  };
+
+  const addEmployee = (emp) => {
+    if (
+      getUser() !== null &&
+      getUser().auth__userId !== null &&
+      getUser().auth__userId !== ""
+    ) {
+      const add = async () => {
+        const employee = {
+          ...emp,
+          userId: getUser().auth__userId,
+        };
+        const addResponse = await axios.post(
+          "http://localhost:8080/api/v1/user/employee",
+          employee,
+          {
+            headers: {
+              Authorization: `Bearer ${getUser().auth__token}`,
+            },
+          }
+        );
+
+        if (addResponse.data.status === 401) {
+          swal("Alert", addResponse.data.message, "warning").then(() => {
+            removeUser();
+            history.push("/login");
+          });
+        } else if (addResponse.data.status === 200) {
+          swal("Congrats", "Employee added successfully", "success").then(
+            () => {
+              const newEmp = {
+                id: addResponse.data.payload.id,
+                firstName: addResponse.data.payload.firstName,
+                lastName: addResponse.data.payload.lastName,
+                email: addResponse.data.payload.email,
+                department: addResponse.data.payload.department,
+              };
+
+              setEmployees((prevData) => {
+                return [...prevData, newEmp];
+              });
+
+              setShowLoader(false);
+            }
+          );
+        }
+      };
+
+      add();
+    } else {
+      swal("Error", "Please login to continue", "error").then(() => {
+        removeUser();
+        history.push("/login");
+      });
+    }
+  };
+
   return (
     <>
       <div className="employee_container">
+        <button
+          className="add__employee__btn"
+          title="Add employee"
+          onClick={() => {
+            addEmployeeModal();
+          }}
+        >
+          Add Employee
+        </button>
         <h1>Showing all Employees 😁</h1>
 
         <div className="employee__table__container">
           <table className="employee__table">
             <thead>
               <tr>
-                <th>Id</th>
+                <th>S. No.</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Address</th>
                 <th>Department</th>
-                <th>Options</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -121,13 +206,16 @@ const Dashboard = () => {
                   <EmployeeRecord
                     key={idx}
                     id={emp.id}
+                    serial={idx + 1}
                     firstName={emp.firstName}
                     lastName={emp.lastName}
                     email={emp.email}
-                    address={emp.address}
                     department={emp.department}
                     onDeleteEmployee={() => {
                       deleteEmployee(emp.id);
+                    }}
+                    onEditEmployee={() => {
+                      editEmployee(emp.id);
                     }}
                   />
                 );
@@ -138,6 +226,16 @@ const Dashboard = () => {
       </div>
 
       <Loader display={showLoader} />
+      <AddEmployee
+        display={showAddEmployee}
+        onCancelAddEmployeeModal={() => {
+          setShowAddEmployee(false);
+        }}
+        onAddEmployee={(emp) => {
+          setShowAddEmployee(false);
+          addEmployee(emp);
+        }}
+      />
     </>
   );
 };

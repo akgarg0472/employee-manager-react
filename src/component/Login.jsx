@@ -115,6 +115,12 @@ const Login = () => {
           return;
         });
 
+      if (response === null || response === undefined) {
+        setShowLoader(false);
+        swal("Error", "Something wrong happended, try again", "error");
+        return;
+      }
+
       if (response.status === 200) {
         setUser({
           auth__token: response.auth_token,
