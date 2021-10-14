@@ -17,7 +17,13 @@ const EmployeeRecord = (props) => {
       <td>
         {firstName} {lastName}
       </td>
-      <td>{email}</td>
+      <td
+        style={{
+          textTransform: "lowercase",
+        }}
+      >
+        {email}
+      </td>
       <td>{department}</td>
       <td>
         <i

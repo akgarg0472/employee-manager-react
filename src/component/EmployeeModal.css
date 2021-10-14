@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-.add__employee__modal__container {
+.add__employee__modal__container,
+.edit__employee__modal__container {
   position: absolute;
   left: 0;
   top: 0;

@@ -5,15 +5,18 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 import Loader from "../component/Loader";
-import "./Dashboard.css";
 import AddEmployee from "./AddEmployee";
+import EditEmployee from "./EditEmployee";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const { getUser, removeUser } = useUser(); // used to manage the authenticated user
   const history = useHistory(); // used for navigation
   const [employees, setEmployees] = useState([]); // manages the employees list
   const [showLoader, setShowLoader] = useState(true); // manages the loader
-  const [showAddEmployee, setShowAddEmployee] = useState(false); // manages the loader
+  const [showAddEmployee, setShowAddEmployee] = useState(false); // manages the show add employee modal
+  const [showAEditEmployee, setShowEditEmployee] = useState(false); // manages the show edit employee modal
+  const [editEmployeeId, setEditEmployeeId] = useState(""); // manages the show edit employee modal
 
   useEffect(() => {
     if (getUser() === null) {
@@ -61,8 +64,8 @@ const Dashboard = () => {
 
   const deleteEmployee = (id) => {
     swal({
-      title: `Are you sure want to delete ${id}`,
-      text: "This action can't be undone",
+      title: `Are you sure?`,
+      text: "This action can't be undone!!",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -103,16 +106,18 @@ const Dashboard = () => {
       } else if (response.status === 202) {
         swal("Error", response.message, "error");
       } else {
-        swal("Success", response.message, "success");
-        setEmployees((prevData) => {
-          return prevData.filter((emp) => emp.id !== id);
+        swal("Success", response.message, "success").then(() => {
+          setEmployees((prevData) => {
+            return prevData.filter((emp) => emp.id !== id);
+          });
         });
       }
     });
   };
 
   const editEmployee = (id) => {
-    console.log("edit employee called");
+    setEditEmployeeId(id);
+    setShowEditEmployee(true);
   };
 
   const addEmployeeModal = () => {
@@ -126,19 +131,23 @@ const Dashboard = () => {
       getUser().auth__userId !== ""
     ) {
       const add = async () => {
+        setShowLoader(true);
         const employee = {
           ...emp,
           userId: getUser().auth__userId,
         };
-        const addResponse = await axios.post(
-          "http://localhost:8080/api/v1/user/employee",
-          employee,
-          {
+        const addResponse = await axios
+          .post("http://localhost:8080/api/v1/user/employee", employee, {
             headers: {
               Authorization: `Bearer ${getUser().auth__token}`,
             },
-          }
-        );
+          })
+          .catch((err) => {
+            setShowLoader(false);
+            swal("Error", err.message, "error");
+          });
+
+        setShowLoader(false);
 
         if (addResponse.data.status === 401) {
           swal("Alert", addResponse.data.message, "warning").then(() => {
@@ -187,7 +196,7 @@ const Dashboard = () => {
         >
           Add Employee
         </button>
-        <h1>Showing all Employees 😁</h1>
+        <h1>Employees List</h1>
 
         <div className="employee__table__container">
           <table className="employee__table">
@@ -226,6 +235,7 @@ const Dashboard = () => {
       </div>
 
       <Loader display={showLoader} />
+
       <AddEmployee
         display={showAddEmployee}
         onCancelAddEmployeeModal={() => {
@@ -236,6 +246,8 @@ const Dashboard = () => {
           addEmployee(emp);
         }}
       />
+
+      <EditEmployee display={showAEditEmployee} id={editEmployeeId} />
     </>
   );
 };

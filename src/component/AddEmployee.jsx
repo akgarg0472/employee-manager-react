@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { emailFormatCheckRegex } from "../values/ConstantsAndValues";
-import "./AddEmployee.css";
+import "./EmployeeModal.css";
 
 const AddEmployee = (props) => {
   const { display } = props;
