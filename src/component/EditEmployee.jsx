@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import "./EmployeeModal.css";
 
 const EditEmployee = (props) => {
-  const { display, id } = props;
+  const { display, id, onCancelButtonClick, onUpdateButtonClick } = props;
   const { getUser, removeUser } = useUser();
   const history = useHistory();
   const [employee, setEmployee] = useState({
@@ -143,8 +143,22 @@ const EditEmployee = (props) => {
           </div>
 
           <div className="modal__footer">
-            <button className="modal__btn">Cancel</button>
-            <button className="modal__btn">Update</button>
+            <button
+              className="modal__btn"
+              onClick={() => {
+                onCancelButtonClick();
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="modal__btn"
+              onClick={() => {
+                onUpdateButtonClick(employee);
+              }}
+            >
+              Update
+            </button>
           </div>
         </div>
       </div>

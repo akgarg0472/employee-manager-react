@@ -184,6 +184,37 @@ const Dashboard = () => {
     }
   };
 
+  const updateEmployee = async (employee) => {
+    setShowLoader(true);
+
+    const response = await axios
+      .put(
+        "http://localhost:8080/api/v1/user/employee",
+        {
+          ...employee,
+          userId: `${getUser().auth__userId}`,
+          employeeId: `${employee.id}`,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${getUser().auth__token}`,
+          },
+        }
+      )
+      .then((res) => res.data)
+      .catch((err) => {
+        setShowLoader(false);
+        swal("Error", err.message, "error");
+      });
+
+    setShowLoader(false);
+    if (response !== null && response !== undefined) {
+      swal(response.message).then(() => {
+        setShowEditEmployee(false);
+      });
+    }
+  };
+
   return (
     <>
       <div className="employee_container">
@@ -234,8 +265,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <Loader display={showLoader} />
-
       <AddEmployee
         display={showAddEmployee}
         onCancelAddEmployeeModal={() => {
@@ -247,7 +276,18 @@ const Dashboard = () => {
         }}
       />
 
-      <EditEmployee display={showAEditEmployee} id={editEmployeeId} />
+      <EditEmployee
+        display={showAEditEmployee}
+        id={editEmployeeId}
+        onCancelButtonClick={() => {
+          setShowEditEmployee(false);
+        }}
+        onUpdateButtonClick={(editedEmployee) => {
+          updateEmployee(editedEmployee);
+        }}
+      />
+
+      <Loader display={showLoader} />
     </>
   );
 };
